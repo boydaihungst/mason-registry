@@ -10,7 +10,7 @@ languages:
 categories:
   - LSP
 source:
-  id: pkg:github.com/boydaihungst/msbuild-project-tools-server@2026.01.22
+  id: pkg:github/boydaihungst/msbuild-project-tools-server@2026.01.22
   build:
     - target: unix
       run: |
