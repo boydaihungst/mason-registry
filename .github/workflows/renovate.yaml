@@ -60,4 +60,3 @@ jobs:
           else
             echo "No updates detected. Skipping commit."
           fi
-          - name: Sync External Fork (Repo B) with Upstream (Repo C)
