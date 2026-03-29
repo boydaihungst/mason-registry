@@ -42,7 +42,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             echo "detected changes"
             git add packages/
-            git commit -m "Daily updates: $LATEST_COMMIT_DATE"
+            git commit -m "Daily updates"
             git push origin HEAD
           else
             echo "No updates detected. Skipping commit."
