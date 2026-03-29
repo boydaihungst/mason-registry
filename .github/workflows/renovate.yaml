@@ -8,12 +8,24 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
+      - name: Sync boydaihungst/msbuild-project-tools-server upstream
+        env:
+          # This MUST be a PAT with 'repo' scope for Repo B
+          EXTERNAL_TOKEN: ${{ secrets.RW_GITHUB_TOKEN }}
+        run: |
+          # 1. Authenticate the GH CLI for the external repo
+          echo "${EXTERNAL_TOKEN}" | gh auth login --with-token
+
+          # 2. Trigger the sync on Repo B
+          # Format: owner_B/repo_B
+          gh repo sync "boydaihungst/msbuild-project-tools-server" --branch master
+
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: master
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RW_GITHUB_TOKEN }}
 
       - name: Configure git
         run: |
@@ -23,7 +35,7 @@ jobs:
 
       - name: Update package.yaml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RW_GITHUB_TOKEN }}
         working-directory: packages
         run: |
           LATEST_COMMIT_DATE=$(gh api repos/tintoy/msbuild-project-tools-server/commits/HEAD \
@@ -36,7 +48,7 @@ jobs:
 
       - name: Commit changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RW_GITHUB_TOKEN }}
         run: |
           # Use git status --porcelain for more reliable change detection
           if [ -n "$(git status --porcelain)" ]; then
@@ -44,6 +56,8 @@ jobs:
             git add packages/
             git commit -m "Daily updates"
             git push origin HEAD
+
           else
             echo "No updates detected. Skipping commit."
           fi
+          - name: Sync External Fork (Repo B) with Upstream (Repo C)
