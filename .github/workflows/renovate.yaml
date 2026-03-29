@@ -44,7 +44,7 @@ jobs:
 
           echo "Latest date found: $LATEST_COMMIT_DATE"
 
-          sed -i "s|msbuild-project-tools-server@.*|msbuild-project-tools-server@${LATEST_COMMIT_DATE}|" msbuild_project_tools/package.yaml
+          sed -i "s|msbuild-project-tools-server@.*|msbuild-project-tools-server@${LATEST_COMMIT_DATE}|" msbuild_project_tools_server/package.yaml
 
       - name: Commit changes
         env:

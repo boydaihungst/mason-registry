@@ -1,5 +1,5 @@
 ---
-name: msbuild_project_tools
+name: msbuild_project_tools_server
 description: |
   An LSP-compatible language service that provides intellisense for MSBuild project files, including auto-complete for <PackageReference> elements.
 homepage: https://github.com/tintoy/msbuild-project-tools-server
@@ -19,4 +19,4 @@ source:
       run: |
         ./build.ps1
 bin:
-  msbuild_project_tools: dotnet:out/language-server/MSBuildProjectTools.LanguageServer.Host.dll
+  msbuild_project_tools_server: dotnet:out/language-server/MSBuildProjectTools.LanguageServer.Host.dll
